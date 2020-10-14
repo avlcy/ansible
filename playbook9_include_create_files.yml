@@ -1,0 +1,16 @@
+---
+- name: Create file1
+  copy:
+    dest: /home/file1.txt
+    content: |
+      This is file N1
+      On English Hello World\
+      On RUSSIAN {{ mytext }}
+
+- name: Create file2
+  copy:
+    dest: /home/file2.txt
+    content: |
+      This is file N2
+      On English Hello World\
+      On RUSSIAN {{ mytext }}

@@ -1,0 +1,23 @@
+---
+- name: Ansible error handling
+  hosts: all
+  any_errors_fatal: yes
+  become: yes
+
+
+  tasks:
+  - name: Task Number1
+    yum: name=treeeee state=latest
+    ignore_errors: yes
+
+  - name: Task Number2
+    shell: echo Hello World!
+    register: results
+    failed_when: result.rc == 0
+#    failed_when: "'World' in results.stdout"
+
+  - debug:
+      var: results
+
+  - name: Task Number3
+    shell: echo Privet Mir!!!

@@ -1,0 +1,50 @@
+---
+- name: Install default Apache Web Server
+  hosts: all
+  become: yes
+
+  vars:
+    source_folder: ./MyWebSite
+    destin_folder: /var/www/html
+
+  tasks:
+  - block: # ====== Block for CentOs ======
+      - name: Install Apache WebServer for CentOS
+        yum: name=httpd state=latest
+      - name: Start Web Server service for CentOS
+        service: name=httpd state=started enabled=yes
+    when: ansible_os_family == "RedHat"
+
+  - block: # ====== Block for UBUNTU ======
+      - name: Install Apache Web Server for Ubuntu
+        yum: name=apache2 state=latest
+      - name: Start Web Server service for Ubuntu
+        service: name=apache2 state=started enabled=yes
+    when: ansible_os_family == "Debian"
+
+  - name: Generate INDEX HTML file
+    template: src={{ source_folder }}/index.j2 dest={{ destin_folder }}/index.html mode=0555
+    notify:
+      - Restart Apache CentOS
+      - Restart Apache Ubuntu
+
+  - name: Copy MyHomePage to Servers
+    copy: src={{ source_file }}/{{ item }} dest={{ destin_folder }} mode=0555
+    loop:
+        - "1.jpg"
+        - "2.jpg"
+        - "104.jpg"
+        - "calf.jpg"
+    notify:
+        - Restart Apache CentOS
+        - Restart Apache Ubuntu
+
+  handlers:
+    - name: Restart Apache CentOS
+      service: name=httpd state=restarted
+      when: ansible_os_family == "RedHat"
+
+    - name: Restart Apache Ubuntu
+      service: name=apache2 state=restarted
+      when: ansible_os_family == "Debian"
+

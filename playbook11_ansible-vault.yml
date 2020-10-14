@@ -1,0 +1,24 @@
+---
+- name: Ansible Lesson 20 Vault
+  hosts: all
+  become: yes
+
+  vars:
+    admin_password: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      38363337666232323839363461363134346339323264626436343531343136346139313437343266
+      6635646434646463653861633438656131323064633163300a396333323964663363646639616430
+      35303564643537353035333064663930623233383562323265343230636238626537373935353065
+      6635663530666563660a663761646330626235393434396632323332303561653161636634333864
+      3936
+
+  tasks:
+    - name: Create Config File
+      copy:
+        dest: "/home/sanya/myconfig.conf"
+        content: |
+          port     = 9092
+          log      = 7days
+          home     = /opt/kafka/bin/
+          user     = admin
+          password = {{ admin_password }}

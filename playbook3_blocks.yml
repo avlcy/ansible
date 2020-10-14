@@ -1,0 +1,28 @@
+---
+- name: Install default Apache Web Server
+  hosts: all
+  become: yes
+
+  vars:
+    source_file: ./MyWebSite/index.html
+    destin_file: /var/www/html
+
+  tasks:
+
+  - block:
+
+    - name: Install Apache WebServer
+      yum: name=httpd state=latest
+
+    - name: Copy MyHomePage to Servers
+      copy: src={{ source_file }} dest={{ destin_file }} mode=0555
+      notify: Restart Apache
+
+    - name: Start Apache and Unable it on the every boot
+      service: name=httpd state=started enabled=yes
+
+    when: ansible_os_family == "RedHat"
+
+  handlers:
+    - name: Restart Apache
+      service: name=httpd state=restarted

@@ -1,0 +1,10 @@
+[PROD]
+centos-1 ansible_host=192.168.1.161  owner=Pety
+centos-2 ansible_host=192.168.1.164  owner=Vasya
+
+[STAGING]
+ubuntu-1 ansible_host=192.168.1.165  owner=Sanya
+
+[ALL_LINUX:children]
+PROD
+STAGING

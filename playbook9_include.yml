@@ -1,0 +1,17 @@
+---
+- name: Test Connection to my servers
+  hosts: all
+  become: yes
+
+  vars:
+    - mytext: Hello from me
+
+  tasks:
+    - name: Ping my servers
+      ping:
+
+    - name: Create folders
+      include: playbook9_include_create_folders.yml
+
+    - name: Create folders
+      include: playbook9_include_create_files.yml
