@@ -15,7 +15,7 @@ ubuntu - 1
 
 `ssh-copy-id username@remote_host`
 
-В файле out описана конфигурация виртуальных машин полученная командой:
+В файле ansible-m-setup-all описана конфигурация виртуальных машин полученная командой:
 ansible -m setup all
 
 ### Запуск playbooks
