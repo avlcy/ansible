@@ -15,4 +15,17 @@ ubuntu - 1
 
 `ssh-copy-id username@remote_host`
 
+В файле out описана конфигурация виртуальных машин полученная командой:
+ansible -m setup all
+
+### Запуск playbooks
+
+Запуск playbooks выполняется командой  ansible-playbook, например:
+`ansible-playbook playbook1_ping.yml`
+
+Для запуска playbook7_ext_vars.yml и playbook11_ansible-vault.yml созданы отдельные файлы запуска 
+run-extra-vars.sh и run-ansible-vault.sh для передачи внешних переменных или параметров.
+
+
+
 
